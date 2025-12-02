@@ -1,0 +1,8 @@
+create procedure insert(s_id INT,s_name TEXT,s_email TEXT,s_gender TEXT)
+Language plpgsql AS $$
+BEGIN
+insert into student(id,name,email,gender)values(s_id,s_name,s_email,s_gender);
+insert into id_card(id,name,email)values(s_id,s_name,s_email);
+END;
+$$;
+
