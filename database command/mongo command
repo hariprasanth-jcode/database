@@ -1,0 +1,3 @@
+
+brew install mongodb-database-tools
+mongoimport "/Users/hariprasanth/Downloads/MOCK_DATA.json" -d college -c students --jsonArray --drop
