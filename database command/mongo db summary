@@ -1,0 +1,184 @@
+  mongo db notes
+     Crud operation in  database
+     Insert a data
+     Insert one data
+    db.test.insertOne({name:"hari"});
+
+insertMany data
+db.students.insertMany(
+[{"name":"hari",age:7},
+{name:"rahul",age:10},
+{name:"imran",age:9},
+{"name":"sourav",age:13}]
+);
+//use case for insert many
+[
+  { "name": "Hari", "age": 20 },
+  { "name": "Aditya", "age": 18 },
+  { "name": "Suchit", "age": 19 },
+  { "name": "Sourav", "age": 21 },
+  { "name": "Kiran", "age": 22 },
+  { "name": "Mohit", "age": 17 },
+  { "name": "Aakash", "age": 20 },
+  { "name": "Vijay", "age": 23 },
+  { "name": "Manoj", "age": 18 },
+  { "name": "Praveen", "age": 19 },
+  { "name": "Arjun", "age": 21 },
+  { "name": "Karthik", "age": 22 },
+  { "name": "Shiva", "age": 20 },
+  { "name": "Naveen", "age": 17 },
+  { "name": "Rakesh", "age": 18 },
+  { "name": "Suresh", "age": 19 },
+  { "name": "Mahesh", "age": 24 },
+  { "name": "Dinesh", "age": 22 },
+  { "name": "Anand", "age": 20 },
+  { "name": "Sanjay", "age": 21 },
+  { "name": "Raja", "age": 18 },
+  { "name": "Lokesh", "age": 23 },
+  { "name": "Deepak", "age": 19 },
+  { "name": "Vishal", "age": 20 },
+  { "name": "Gopinath", "age": 22 },
+  { "name": "Yogesh", "age": 21 },
+  { "name": "Shankar", "age": 17 },
+  { "name": "Harish", "age": 19 },
+  { "name": "Ganesh", "age": 23 },
+  { "name": "Prakash", "age": 20 }
+]
+insertMany(data,options)
+db.book.insertMany([{_id:"A",name:"A",price:1},{_id:"B",name:"B",price:2},{_id:"C",name:"C",price:3}],{ordered:false});
+Here we have to take the json array object
+Update operation 
+updateOne(filter,data)
+updateMany(filter,data)
+
+db.student.updateOne(
+{age:10},{$set:{age:18}});
+db.students.updateMany(
+{age:10},{$set:{age:18}});
+
+db.students.updateMany({age:{$lte:18}},{$set:{isEligible:false}});
+if the key is existing it will update the value 
+if the key is not existing it will create a key and update
+read operation 
+
+read operation we can perform using 
+findOne(filter);
+it return null if the condition wont satisfy
+find(filter,projection);
+db.students.find();
+db.students.find({},{name:1,_id:0});
+it will return all the data in collection in form of array
+with cursor for iteration if the data is not existing 
+
+by default it will return the _id for the object inclusive
+if there we can exclusive stop the projection of _id
+
+db.students.find({},{_id:0});
+
+db.students.find().toArray();
+return all the data in json array with out array format
+
+=======================================Datatype in MongoDb
+Text
+Boolean
+Number
+	Integer
+	NumberLong
+	NumberDecimal
+Object _id
+ISO Date
+TimeStamp
+Array
+Emb Document
+db.companyData.insertOne({name:"mapper",isFunded:true,funding:8776554332,employees:[{name:"hari",age:26},{name:"prasanth",age:26}],foundedOn:new Date(),foundedOnTimeStamp:new Timestamp()});
+typeof db.companData.findOne().name
+Mongodb is schemaless we have to main the schema for the collection
+Delete Operation
+To delete Document
+deleteOne(filter);
+deleteMany(filter);
+
+drop.dropDataBase()=visit the db and drop
+to drop a collection
+db.collectionName.drop();
+projection in mongodb
+Projection in MongoDB is used to select only specific fields from documents instead of retrieving the entire document.
+It helps in:
+Reducing network load
+Improving query performance
+Returning only the required fields
+db.collection.find(filter, projection)
+db.students.find({}, { name: 1, age: 1 })
+This returns:
+•	name
+•	age
+•	_id (by default)
+db.students.find({}, { name: 1, age: 1, _id: 0 })
+==================================================================
+to create Collection
+db.createCollection("non_fiction",
+{
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "price"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        price: {
+          bsonType: "int",
+          description: "must be an integer and is required"
+        }
+      }
+    }
+  },
+  validationAction: "error"
+});
+
+db.runCommand({
+  collMod: "non_fiction",
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "price", "author"],
+      properties: {
+        name: {
+          bsonType: "string",
+          description: "must be a string and is required"
+        },
+        price: {
+          bsonType: "int",
+          description: "must be an integer and is required"
+        },
+        author: {
+          bsonType: "array",
+          description: "must be an array and is required",
+          items: {
+            bsonType: "object",
+            required: ["name", "email"],
+            properties: {
+              name: { bsonType: "string" },
+              email: { bsonType: "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  validationAction: "error"
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
