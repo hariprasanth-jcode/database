@@ -172,6 +172,13 @@ db.runCommand({
   validationAction: "error"
 })
 
+=========================================================================
+mongodb import
+https://www.mongodb.com/try/download/database-tools
+
+mongoimport "/Users/hariprasanth/Desktop/prac.json" -d college -c students --jsonArray --drop
+
+
 
 
 
