@@ -46,6 +46,7 @@ db.students.insertMany(
 ]
 insertMany(data,options)
 db.book.insertMany([{_id:"A",name:"A",price:1},{_id:"B",name:"B",price:2},{_id:"C",name:"C",price:3}],{ordered:false});
+ordered default value is true
 Here we have to take the json array object
 ========================================================================================
 Update operation 
@@ -177,6 +178,24 @@ mongodb import
 https://www.mongodb.com/try/download/database-tools
 
 mongoimport "/Users/hariprasanth/Desktop/prac.json" -d college -c students --jsonArray --drop
+=============================================================================
+comparison operator
+
+$eq $ne $lt $gt $lte $gte $in $nin
+
+db.students.find({age:5})
+db.students.find({age:{$eq:5}});
+db.students.find({age:{$gt:5}});
+ db.students.find({age:{$lt:20}},{_id:0});
+
+$in
+db.students.find({age:{$in:[17,18,19]}},{_id:0});
+
+$nin
+db.students.find({age:{$nin:[17,18,19]}},{_id:0});
+
+db.companyData.find({'employees.age':30});
+
 
 
 
