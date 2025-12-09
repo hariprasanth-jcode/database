@@ -214,6 +214,62 @@ db.students.find({age:{$lt:21},age:{$gt:18}});  in json it will always give the 
 db.students.find({$and:[{age:{$lt:20}},{age:{$gt:17}}]});
 
 db.students.find({age:{$not:{$eq:17}}});
+====================================================================================================
+$exists
+In MongoDB, the $exists operator is used to check whether a field exists or does not exist in a document.
+
+{ field: { $exists: <boolean> } }
+
+db.students.find({ email: { $exists: true } })
+
+https://www.mongodb.com/docs/manual/reference/operator/query/type/
+
+Evaluation Operator
+In MongoDB, Evaluation Operators are used to evaluate expressions, apply custom logic, or perform text-based or regex-based matching.
+$regex	       Match a string using regular expression
+$options	   Options for regex (i, m, s, x)
+$expr	       Use aggregation expressions inside normal queries
+$jsonSchema	   Validate using JSON Schema
+$mod	       Modulus operation (field % divisor == remainder)
+$text	       Full-text search on text indexes
+$where	       Run JavaScript expression (slow, not recommended)
+------------------------------------------------------------------------------------------------------
+
+$regex
+db.students.find({name:{$regex:/^A/}});
+
+$text
+Create a Text Index
+You must create a text index on the fields where you want to search.
+Example: Create text index on name and description fields:
+db.students.createIndex({ name: "text", description: "text" })
+
+db.students.find({ $text: { $search: "developer" } })
+$mod	Modulus operation (field % divisor == remainder)
+db.students.find({age:{$mod:[2,0]}});
+
+querying in array
+db.students.find({hobbies:"coding"});
+
+db.students.find({hobbies:"coding"}).limit(3);
+
+db.students.find({'experience.company':"TCS"});
+
+db.students.find({'experience.company':"TCS"}).limit(3);
+
+db.students.countDocuments({"experience.company":"TCS"});
+
+db.students.find({'experience.company':"TCS"}).size();
+
+//detail of students working in 3 company
+db.students.find({experience:{$size:3}});
+//to satisfy all the values in the list in any order
+db.students.find({hobbies:{$all:["walk","coding"]}});
+// to satisfy all the values only in given order
+db.students.find({hobbies:{$in:["walk","coding"]}});
+
+
+
 
 
 
